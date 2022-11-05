@@ -1,0 +1,301 @@
+.overlay-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.modal {
+  padding: 32px 0 28px; 
+}
+
+.modal__container {
+  max-width: 792px;
+  min-height: 613px;
+  margin: 0 auto;
+  background-color: #F2F0F9;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+}
+
+.form__box {
+  padding: 32px 106px 39px 106px;
+  position: relative;
+}
+
+.form__fieldset {
+  border: 0;
+  padding: 0;
+}
+
+.form__inner-box {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: minmax(100px, 250px) minmax(100px, 250px);
+  grid-template-rows: 60px 60px 60px 131px;
+  grid-template-areas: 
+  "name descr"
+  "category descr"
+  "units count"
+  "discount price";
+  gap: 12px 24px;
+  min-height: 403px;
+  padding: 28px;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  margin-bottom: 28px;
+}
+
+.form__title {
+  display: block;
+  font-size: 24px;
+  letter-spacing: 0.1em;
+  line-height: 29px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 21px;
+}
+
+.form__line {
+  width: 100%;
+  height: 1px;
+  background-color: #C6C2DE;
+  margin-bottom: 21px;
+}
+
+.form__label {
+  display: block;
+  padding-left: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 15px;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.form__label_price {
+  margin-bottom: 32px;
+}
+
+.form__name {
+  grid-area: name;
+}
+
+.form__descr {
+  grid-area: descr;
+}
+
+.form__category {
+  grid-area: category;
+}
+
+.form__units {
+  grid-area: units;
+}
+
+.form__count {
+  grid-area: count;
+}
+
+.form__discount-wrapper {
+  grid-area: discount;
+  align-self: start;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  padding: 0;
+}
+
+.form__discount-input-wrapper {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.form__price {
+  grid-area: price;
+}
+
+.form__input {
+  display: block;
+  background-color:#F4F2FF;
+  border-radius: 6px;
+  width: 100%;
+  height: 40px;
+  border: 0;
+}
+
+.form__input:focus {
+  background-color: #EEEEEE;
+  outline: none;
+}
+
+.form__checkbox {
+  position: relative;
+  display: block;
+  min-width: 40px;
+  height: 40px;
+  text-transform: uppercase;
+}
+
+.form__checkbox-input {
+  position: absolute;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.form__checkbox-input:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background-color:#F4F2FF;
+}
+
+.form__checkbox-input:after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 10px;
+  width: 20px;
+  height: 10px;
+  border: 2px solid black;
+  border-top: none;
+  border-right: none;
+  opacity: 0;
+  transform: rotate(-45deg);
+}
+
+.form__checkbox-input:checked:after {
+  opacity: 1
+}
+
+.form__textarea {
+  display: block;
+  background-color:#F4F2FF;
+  border-radius: 6px;
+  width: 100%;
+  height: 112px;
+  border: 0;
+  resize: none;
+  margin: 5px 0 13px;
+}
+
+.form__textarea:focus {
+  background-color: #EEEEEE;
+  outline: none;
+}
+
+.form__image-btn {
+  display: block;
+  width: 100%;
+  height: 39px;
+  background-color: #6D5BD0;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+.form__image-input {
+  display: none;
+}
+
+.form__under-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 28px 0 28px;
+  height: 39px;
+  width: 100%;
+}
+
+.form__final-price {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #6E6893;
+}
+
+.form__final-price_count {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 120%;
+  color: #6D5BD0;
+}
+
+.form__button {
+  width: 200px;
+  height: 39px;
+  background: #6D5BD0;
+  border-radius: 6px;
+  color: #FFFFFF;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: 0;
+  float: right;
+}
+
+.modal__close {
+  position: absolute;
+  display: block;
+  border: 0;
+  width: 20px;
+  height: 20px;
+  color: #6E6893;
+  right: 30px;
+  top: 20px;
+}
+
+@media (max-width: 768px) {
+  .form__box {
+    padding: 32px 20px 39px 20px;
+  }
+}
+
+@media (max-width: 540px) {
+  .form__inner-box {
+    grid-template-columns: minmax(100px, 100%);
+    grid-template-rows: 60px 132px 60px 60px 60px 60px 131px;
+    grid-template-areas: 
+    "name"
+    "descr"
+    "category"
+    "units" 
+    "count"
+    "discount" 
+    "price";
+    gap: 12px 24px;
+    min-height: 403px;
+    padding: 28px;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    margin-bottom: 28px;
+  }
+
+  .form__under-wrapper {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    height: 71px;
+    padding: 0;
+  }
+
+  .modal__close {
+    right: 10px;
+    top: 10px;
+  }
+}

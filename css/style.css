@@ -1,0 +1,69 @@
+@import "normalize.css";
+@import "table.css";
+@import "modal.css";
+@import "fonts.css";
+
+html {
+  position: relative;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #fff;
+  color: #6E6893;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+img, svg {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+}
+
+button {
+  padding: 0;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+p,
+figure,
+fieldset {
+  margin: 0;
+}
+
+.container {
+  max-width: 1300px;
+  padding: 0 100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    max-width: 1024px;
+    padding: 0 20px;
+  }
+}
