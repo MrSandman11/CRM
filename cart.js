@@ -2,10 +2,10 @@
 
 const cart = {
   items: [],
-  totalPrice: 0,
   count: 0,
-  getTotalPrice() {
-    return this.totalPrice;
+  get totalPrice() {
+    let totalPrice = this.calculateItemPrice();
+    return totalPrice;
   },
   add(name, price, qty = 1) {
     this.items.push({
@@ -14,20 +14,19 @@ const cart = {
       qty,
     });
     this.increaseCount(qty);
-    this.calculateItemPrice();
   },
   increaseCount(qty) {
     this.count += qty;
   },
   calculateItemPrice() {
-    this.totalPrice = 0;
+    let totPrice = 0;
     this.items.forEach(item => {
-      this.totalPrice += item.price * item.qty;
+      totPrice += item.price * item.qty;
     });
+    return totPrice;
   },
   clear() {
     this.items = [];
-    this.totalPrice = 0;
     this.count = 0;
   },
   print() {
@@ -39,6 +38,7 @@ const cart = {
 cart.add('headphones', 500, 2);
 cart.add('iphone', 1500, 7);
 cart.add('charge', 200, 20);
+console.log('cart.totalPrice: ', cart.totalPrice);
 // cart.clear();
 cart.print();
 console.log(cart);
