@@ -4,7 +4,7 @@ const cart = {
   items: [],
   count: 0,
   get totalPrice() {
-    let totalPrice = this.calculateItemPrice();
+    const totalPrice = this.calculateItemPrice();
     return totalPrice;
   },
   add(name, price, qty = 1) {
