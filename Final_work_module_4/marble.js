@@ -16,11 +16,17 @@
     };
 
     const youWon = (userAnswer, computerAnswer) => {
-      alert(`Вы выиграли раунд \nВы загадали ${userAnswer} \nКомпьютер выбрал: ${computerAnswer} \nКоличество шариков: \nИгрок: ${result.player} \nКомпьютер: ${result.computer}`);
+      alert(`Вы выиграли раунд  
+Вы загадали ${userAnswer} \nКомпьютер выбрал: ${computerAnswer}   
+Количество шариков:   
+Игрок: ${result.player} \nКомпьютер: ${result.computer}`);
     };
 
     const youLose = (userAnswer, computerAnswer) => {
-      alert(`Вы проиграли раунд \nВы загадали ${userAnswer} \nКомпьютер выбрал: ${computerAnswer} \nКоличество шариков: \nИгрок: ${result.player} \nКомпьютер: ${result.computer}`);
+      alert(`Вы проиграли раунд   
+Вы загадали ${userAnswer} \nКомпьютер выбрал: ${computerAnswer}   
+Количество шариков:   
+Игрок: ${result.player} \nКомпьютер: ${result.computer}`);
     };
 
     return function startGame() {
@@ -35,7 +41,10 @@
       };
 
       const startCompTurn = () => {
-        let userAnswer = confirm(`Количество шариков: \nИгрок: ${result.player} \nКомпьютер: ${result.computer} \nКомпьютер загадал число. \nЧисло четное?`);
+        let userAnswer = confirm(`Количество шариков:   
+Игрок: ${result.player}   
+Компьютер: ${result.computer}   
+Компьютер загадал число. \nЧисло четное?`);
         switch (userAnswer) {
           case true:
             userAnswer = 'чет';
@@ -69,11 +78,13 @@
           youLose(userAnswer, computerAnswer);
         }
         if (result.player >= 10) {
-          oneMoreGame = confirm('Вы забрали все шарики у компьютера и выиграли \nСыграем еще разок?');
+          oneMoreGame = confirm(`Вы забрали все шарики у компьютера и выиграли  
+Сыграем еще разок?`);
           oneMoreGameStart();
         } else {
           if (result.computer >= 10) {
-            oneMoreGame = confirm('Компьютер забрал у вас все шарики и выиграл \nСыграем еще разок?');
+            oneMoreGame = confirm(`Компьютер забрал у вас все шарики и выиграл  
+Сыграем еще разок?`);
             oneMoreGameStart();
           } else {
             startUserTurn();
@@ -82,7 +93,10 @@
       };
 
       const startUserTurn = () => {
-        let userAnswer = +prompt(`Количество шариков: \nИгрок: ${result.player} \nКомпьютер: ${result.computer} \nЗагадайте число от 1 до ${result.player}`);
+        let userAnswer = +prompt(`Количество шариков:   
+Игрок: ${result.player}   
+Компьютер: ${result.computer}   
+Загадайте число от 1 до ${result.player}`);
         let computerAnswer = getRandomIntInclusive(1, 2);
         switch (computerAnswer) {
           case 1:
@@ -116,11 +130,13 @@
           youWon(userAnswer, computerAnswer);
         }
         if (result.player >= 10) {
-          oneMoreGame = confirm('Вы забрали все шарики у компьютера и выиграли \nСыграем еще разок?');
+          oneMoreGame = confirm(`Вы забрали все шарики у компьютера и выиграли  
+Сыграем еще разок?`);
           oneMoreGameStart();
         } else {
           if (result.computer >= 10) {
-            oneMoreGame = confirm('Компьютер забрал у вас все шарики и выиграл \nСыграем еще разок?');
+            oneMoreGame = confirm(`Компьютер забрал у вас все шарики и выиграл  
+Сыграем еще разок?`);
             oneMoreGameStart();
           } else {
             startCompTurn();
@@ -129,7 +145,8 @@
       };
 
       const rps = () => {
-        let userAnswer = prompt('Для определения первого хода в игре "Марблы" сыграем в "Камень, ножницы, бумага?"');
+        let userAnswer = prompt(`Для определения первого хода в игре "Марблы"   
+сыграем в "Камень, ножницы, бумага?"`);
         if (!(userAnswer === null)) {
           let computerAnswer = getRandomIntInclusive(1, 3);
           switch (computerAnswer) {
@@ -146,7 +163,9 @@
           let gameResult;
 
           const gameResultCheck = () => {
-            alert(`Компьютер: ${computerAnswer} \nВы: ${userAnswerCheck[0]} \n${gameResult}`);
+            alert(`Компьютер: ${computerAnswer}   
+Вы: ${userAnswerCheck[0]}   
+${gameResult}`);
             switch (gameResult) {
               case 'Ничья':
                 rps();
@@ -165,46 +184,26 @@
           if (userAnswerCheck.length === 0) {
             rps();
           } else {
-            if (userAnswerCheck[0] === 'камень') {
-              switch (computerAnswer) {
-                case 'камень':
-                  gameResult = 'Ничья';
-                  break;
-                case 'ножницы':
-                  gameResult = 'Вы выиграли';
-                  break;
-                case 'бумага':
-                  gameResult = 'Компьютер выиграл';
-                  break;
-              }
+            if (userAnswerCheck[0] === computerAnswer) {
+              gameResult = 'Ничья';
               gameResultCheck();
             } else {
-              if (userAnswerCheck[0] === 'ножницы') {
-                switch (computerAnswer) {
-                  case 'камень':
-                    gameResult = 'Компьютер выиграл';
-                    break;
-                  case 'ножницы':
-                    gameResult = 'Ничья';
-                    break;
-                  case 'бумага':
-                    gameResult = 'Вы выиграли';
-                    break;
-                }
+              if (userAnswerCheck[0] === FIGURES_RUS[0] &&
+                computerAnswer === FIGURES_RUS[1] ||
+                userAnswerCheck[0] === FIGURES_RUS[1] &&
+                computerAnswer === FIGURES_RUS[2] ||
+                userAnswerCheck[0] === FIGURES_RUS[2] &&
+                computerAnswer === FIGURES_RUS[0]) {
+                gameResult = 'Вы выиграли';
                 gameResultCheck();
               } else {
-                if (userAnswerCheck[0] === 'бумага') {
-                  switch (computerAnswer) {
-                    case 'камень':
-                      gameResult = 'Вы выиграли';
-                      break;
-                    case 'ножницы':
-                      gameResult = 'Компьютер выиграл';
-                      break;
-                    case 'бумага':
-                      gameResult = 'Ничья';
-                      break;
-                  }
+                if (userAnswerCheck[0] === FIGURES_RUS[0] &&
+                  computerAnswer === FIGURES_RUS[2] ||
+                  userAnswerCheck[0] === FIGURES_RUS[1] &&
+                  computerAnswer === FIGURES_RUS[0] ||
+                  userAnswerCheck[0] === FIGURES_RUS[2] &&
+                  computerAnswer === FIGURES_RUS[1]) {
+                  gameResult = 'Компьютер выиграл';
                   gameResultCheck();
                 }
               }
