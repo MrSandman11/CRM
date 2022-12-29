@@ -3,12 +3,21 @@
 const activeModal = document.querySelector('.overlay-modal');
 const addGoodBtn = document.querySelector('.table__add-btn');
 const closeModalBtn = document.querySelector('.modal__close');
+const modalContainer = document.querySelector('.modal__container');
 
 addGoodBtn.addEventListener('click', () => {
   activeModal.classList.add('overlay-modal_active');
 });
 
 closeModalBtn.addEventListener('click', () => {
+  activeModal.classList.remove('overlay-modal_active');
+});
+
+modalContainer.addEventListener('click', event => {
+  event.stopPropagation();
+});
+
+activeModal.addEventListener('click', () => {
   activeModal.classList.remove('overlay-modal_active');
 });
 
