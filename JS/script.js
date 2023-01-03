@@ -1,8 +1,25 @@
 'use strict';
 
 const activeModal = document.querySelector('.overlay-modal');
+const addGoodBtn = document.querySelector('.table__add-btn');
+const closeModalBtn = document.querySelector('.modal__close');
+const modalContainer = document.querySelector('.modal__container');
 
-activeModal.classList.add('overlay-modal_active');
+addGoodBtn.addEventListener('click', () => {
+  activeModal.classList.add('overlay-modal_active');
+});
+
+closeModalBtn.addEventListener('click', () => {
+  activeModal.classList.remove('overlay-modal_active');
+});
+
+modalContainer.addEventListener('click', event => {
+  event.stopPropagation();
+});
+
+activeModal.addEventListener('click', () => {
+  activeModal.classList.remove('overlay-modal_active');
+});
 
 const modalTitle = document.querySelector('.modal .form__title');
 // Что за кнопка возле id и сам id??? Не понятно где искать.
