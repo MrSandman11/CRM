@@ -1,48 +1,5 @@
 'use strict';
 
-const activeModal = document.querySelector('.overlay-modal');
-const addGoodBtn = document.querySelector('.table__add-btn');
-const closeModalBtn = document.querySelector('.modal__close');
-const modalContainer = document.querySelector('.modal__container');
-
-addGoodBtn.addEventListener('click', () => {
-  activeModal.classList.add('overlay-modal_active');
-});
-
-activeModal.addEventListener('click', e => {
-  const target = e.target;
-  if (target === activeModal ||
-    target.closest('.modal__close')) {
-    activeModal.classList.remove('overlay-modal_active');
-  }
-});
-
-const modalTitle = document.querySelector('.modal .form__title');
-// Что за кнопка возле id и сам id??? Не понятно где искать.
-const form = document.querySelector('#modal');
-const formDiscountCheckbox = document.querySelector('.form__checkbox');
-const formDiscountDescr =
-document.querySelector('.form__discount-input-wrapper .form__input');
-const finalPrice = document.querySelector('.form__final-price_count');
-
-const table = document.querySelector('.table__tbody');
-
-const createRow = (obj) => {
-  const newTrElem = document.createElement('tr');
-  newTrElem.classList.add('table__tbody-tr');
-  table.prepend(newTrElem);
-  const values = Object.values(obj);
-  for (const key of values) {
-    const newTdElem = document.createElement('td');
-    newTdElem.classList.add('table__tbody-td');
-    newTdElem.textContent = key;
-    newTrElem.append(newTdElem);
-  }
-  const delTdElem = document.createElement('td');
-  delTdElem.classList.add('table__tbody-td', 'table__tbody-td_del');
-  newTrElem.append(delTdElem);
-};
-
 const goods = [
   {
     'id': 253842678,
@@ -90,6 +47,38 @@ const goods = [
   },
 ];
 
+const activeModal = document.querySelector('.overlay-modal');
+const table = document.querySelector('.table__tbody');
+const addGoodBtn = document.querySelector('.table__add-btn');
+
+addGoodBtn.addEventListener('click', () => {
+  activeModal.classList.add('overlay-modal_active');
+});
+
+activeModal.addEventListener('click', e => {
+  const target = e.target;
+  if (target === activeModal ||
+    target.closest('.modal__close')) {
+    activeModal.classList.remove('overlay-modal_active');
+  }
+});
+
+const createRow = (obj) => {
+  const newTrElem = document.createElement('tr');
+  newTrElem.classList.add('table__tbody-tr');
+  table.prepend(newTrElem);
+  const values = Object.values(obj);
+  for (const key of values) {
+    const newTdElem = document.createElement('td');
+    newTdElem.classList.add('table__tbody-td');
+    newTdElem.textContent = key;
+    newTrElem.append(newTdElem);
+  }
+  const delTdElem = document.createElement('td');
+  delTdElem.classList.add('table__tbody-td', 'table__tbody-td_del');
+  newTrElem.append(delTdElem);
+};
+
 const renderGoods = (arr) => {
   arr.map((item) => {
     createRow(item);
@@ -111,5 +100,3 @@ table.addEventListener('click', e => {
     target.closest('.table__tbody-tr').remove();
   }
 });
-
-
