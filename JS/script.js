@@ -9,16 +9,12 @@ addGoodBtn.addEventListener('click', () => {
   activeModal.classList.add('overlay-modal_active');
 });
 
-closeModalBtn.addEventListener('click', () => {
-  activeModal.classList.remove('overlay-modal_active');
-});
-
-modalContainer.addEventListener('click', event => {
-  event.stopPropagation();
-});
-
-activeModal.addEventListener('click', () => {
-  activeModal.classList.remove('overlay-modal_active');
+activeModal.addEventListener('click', e => {
+  const target = e.target;
+  if (target === activeModal ||
+    target.closest('.modal__close')) {
+    activeModal.classList.remove('overlay-modal_active');
+  }
 });
 
 const modalTitle = document.querySelector('.modal .form__title');
@@ -42,6 +38,9 @@ const createRow = (obj) => {
     newTdElem.textContent = key;
     newTrElem.append(newTdElem);
   }
+  const delTdElem = document.createElement('td');
+  delTdElem.classList.add('table__tbody-td', 'table__tbody-td_del');
+  newTrElem.append(delTdElem);
 };
 
 const goods = [
@@ -55,7 +54,6 @@ const goods = [
     'total': 81000,
     'images': '',
     'edit': '',
-    'delete': '',
   },
   {
     'id': 296378448,
@@ -67,7 +65,6 @@ const goods = [
     'total': 4000,
     'images': '',
     'edit': '',
-    'delete': '',
   },
   {
     'id': 215796548,
@@ -79,7 +76,6 @@ const goods = [
     'total': 49600,
     'images': '',
     'edit': '',
-    'delete': '',
   },
   {
     'id': 246258248,
@@ -91,7 +87,6 @@ const goods = [
     'total': 9240,
     'images': '',
     'edit': '',
-    'delete': '',
   },
 ];
 
@@ -102,3 +97,19 @@ const renderGoods = (arr) => {
 };
 
 renderGoods(goods);
+
+table.addEventListener('click', e => {
+  const target = e.target;
+  if (target.closest('.table__tbody-td_del')) {
+    const deletedTr = target.closest('.table__tbody-tr');
+    for (let i = goods.length; i--;) {
+      if (goods[i].id === Number(deletedTr.firstChild.textContent)) {
+        goods.splice(i, 1);
+      }
+    }
+    console.log(goods);
+    target.closest('.table__tbody-tr').remove();
+  }
+});
+
+
