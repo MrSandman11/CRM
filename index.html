@@ -106,7 +106,8 @@
                       class="form__input" 
                       id="name"
                       type="text" 
-                      name="name">  
+                      name="name"
+                      required>  
                 </div>
 
                 <div class="form__category">
@@ -115,7 +116,8 @@
                       class="form__input" 
                       id="category"
                       type="text" 
-                      name="category">
+                      name="category"
+                      required>
                 </div>
 
                 <div class="form__units">
@@ -124,7 +126,8 @@
                       class="form__input" 
                       id="units"
                       type="text"
-                      name="units">
+                      name="units"
+                      required>
                 </div>
 
                 <fieldset class="form__discount-wrapper">
@@ -136,13 +139,16 @@
                         class="form__checkbox-input" 
                         type="checkbox"
                         name="is-discount"
-                        value="yes">
+                        value="yes"
+                        required>
                     </label>
         
                       <input 
-                        class="form__input" 
-                        type="text"
-                        name="discount">
+                        class="form__input form__input-discount" 
+                        type="number"
+                        name="discount"
+                        disabled
+                        required>
                   </div>
                 </fieldset>
 
@@ -151,7 +157,9 @@
                   <textarea 
                       class="form__textarea" 
                       id="descr"
-                      name="description">
+                      name="description"
+                      type="text"
+                      required>
                   </textarea>
                 </div>
 
@@ -161,7 +169,8 @@
                       class="form__input" 
                       id="count"
                       type="number"
-                      name="count">
+                      name="count"
+                      required>
                 </div>
 
                 <div class="form__price">
@@ -171,7 +180,8 @@
                         class="form__input" 
                         id="price"
                         type="number"
-                        name="price">
+                        name="price"
+                        required>
                   </div>
                   <button type="button" class="form__image-btn" onclick="file.click()">Добавить изображение</button>
                   <input 
@@ -184,7 +194,7 @@
             </fieldset>
 
             <div class="form__under-wrapper">
-              <p class="form__final-price">Итоговая стоимость: <span class="form__final-price_count">$ 900.00</span></p>
+              <p class="form__final-price">Итоговая стоимость: <span class="form__final-price_count">$ 0</span></p>
 
               <button 
                 type="submit"
