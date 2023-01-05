@@ -182,6 +182,36 @@ const deleteControl = () => {
 
 deleteControl();
 
+const editIdControl = () => {
+  table.addEventListener('click', e => {
+    const target = e.target;
+    const editedId = target.parentElement.firstChild;
+    if (target.closest('.table__tbody-td_edit')) {
+      let previousId;
+      for (let i = goods.length; i--;) {
+        if (goods[i].id === Number(editedId.textContent)) {
+          previousId = goods[i].id;
+        }
+      }
+      editedId.setAttribute('contenteditable', true);
+      editedId.style.color = 'red';
+      editedId.focus();
+      editedId.addEventListener('blur', () => {
+        editedId.style.color = '#25213B';
+        editedId.setAttribute('contenteditable', false);
+        for (let i = goods.length; i--;) {
+          if (goods[i].id === previousId) {
+            goods[i].id = Number(editedId.textContent);
+            console.log(goods);
+          }
+        }
+      });
+    }
+  });
+};
+
+editIdControl();
+
 const totalPriceFormUpdate = () => {
   const totalPriceForm = document.querySelector('.form__final-price_count');
   const {count, price, discount} = form;
@@ -204,12 +234,19 @@ const formControl = (closeModal) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const newGood = Object.fromEntries(formData);
-    createRow(newGood);
-    addGoodData(newGood);
-    totalPriceUpdate(goods);
-    form.reset();
-    checkbox.toggleAttribute('checked');
-    closeModal();
+    const {name, category, units, discount, description, count, price} = form;
+
+    if (!name.value || !category.value || !units.value ||
+      !discount.value || !description.value || !count.value || !price.value) {
+      alert('Заполните все поля');
+    } else {
+      createRow(newGood);
+      addGoodData(newGood);
+      totalPriceUpdate(goods);
+      form.reset();
+      checkbox.toggleAttribute('checked');
+      closeModal();
+    }
   });
 };
 
