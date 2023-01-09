@@ -43,14 +43,26 @@ const addGoodData = newGood => {
   goods.push(newGood);
 };
 
-const modalOverlay = document.querySelector('.overlay-modal');
-const table = document.querySelector('.table__tbody');
-const addGoodBtn = document.querySelector('.table__add-btn');
-const totalPriceValue =
-  document.querySelector('.table__header-final-price_count');
-const form = document.querySelector('.form__box');
-const checkbox = document.querySelector('.form__checkbox-input');
-const discountInput = document.querySelector('.form__input-discount');
+const getPageElements = () => {
+  const modalOverlay = document.querySelector('.overlay-modal');
+  const table = document.querySelector('.table__tbody');
+  const addGoodBtn = document.querySelector('.table__add-btn');
+  const totalPriceValue =
+    document.querySelector('.table__header-final-price_count');
+  const form = document.querySelector('.form__box');
+  const checkbox = document.querySelector('.form__checkbox-input');
+  const discountInput = document.querySelector('.form__input-discount');
+
+  return {
+    modalOverlay,
+    table,
+    addGoodBtn,
+    totalPriceValue,
+    form,
+    checkbox,
+    discountInput,
+  };
+};
 
 const getRandomNum = (min, max) => {
   min = Math.ceil(min);
@@ -58,14 +70,12 @@ const getRandomNum = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const modalControl = () => {
-  const openModal = () => {
+const modalControl = (modalOverlay, addGoodBtn) => {
+  const openModal = () =>
     modalOverlay.classList.add('overlay-modal_active');
-  };
 
-  const closeModal = () => {
+  const closeModal = () =>
     modalOverlay.classList.remove('overlay-modal_active');
-  };
 
   addGoodBtn.addEventListener('click', openModal);
 
@@ -82,7 +92,7 @@ const modalControl = () => {
   };
 };
 
-const createRow = (obj) => {
+const createRow = (obj, table) => {
   const newTrElem = document.createElement('tr');
   newTrElem.classList.add('table__tbody-tr');
   table.prepend(newTrElem);
@@ -145,15 +155,15 @@ const createRow = (obj) => {
   newTrElem.append(delTdElem);
 };
 
-const renderGoods = (arr) => {
+const renderGoods = (arr, table) => {
   arr.map((item) => {
-    createRow(item);
+    createRow(item, table);
   });
 };
 
-renderGoods(goods);
+// renderGoods(goods, table);
 
-const totalPriceUpdate = arr => {
+const totalPriceUpdate = (arr, totalPriceValue) => {
   let totalPrice = 0;
   for (const good of arr) {
     totalPrice +=
@@ -162,9 +172,9 @@ const totalPriceUpdate = arr => {
   totalPriceValue.textContent = `$ ${totalPrice}`;
 };
 
-totalPriceUpdate(goods);
+// totalPriceUpdate(goods);
 
-const deleteControl = () => {
+const deleteControl = (table, goods, totalPriceValue) => {
   table.addEventListener('click', e => {
     const target = e.target;
     if (target.closest('.table__tbody-td_del')) {
@@ -175,14 +185,14 @@ const deleteControl = () => {
         }
       }
       target.closest('.table__tbody-tr').remove();
-      totalPriceUpdate(goods);
+      totalPriceUpdate(goods, totalPriceValue);
     }
   });
 };
 
-deleteControl();
+// deleteControl(table, goods);
 
-const editIdControl = () => {
+const editIdControl = (table, goods) => {
   table.addEventListener('click', e => {
     const target = e.target;
     const editedId = target.parentElement.firstChild;
@@ -210,9 +220,9 @@ const editIdControl = () => {
   });
 };
 
-editIdControl();
+// editIdControl(table, goods);
 
-const totalPriceFormUpdate = () => {
+const totalPriceFormUpdate = (form) => {
   const totalPriceForm = document.querySelector('.form__final-price_count');
   const {count, price, discount} = form;
   form.addEventListener('focusout', e => {
@@ -227,9 +237,10 @@ const totalPriceFormUpdate = () => {
   });
 };
 
-totalPriceFormUpdate();
+// totalPriceFormUpdate(form);
 
-const formControl = (closeModal) => {
+const formControl = (closeModal, form, checkbox,
+    table, goods, totalPriceValue) => {
   form.addEventListener('submit', e => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -240,9 +251,9 @@ const formControl = (closeModal) => {
       !discount.value || !description.value || !count.value || !price.value) {
       alert('Заполните все поля');
     } else {
-      createRow(newGood);
+      createRow(newGood, table);
       addGoodData(newGood);
-      totalPriceUpdate(goods);
+      totalPriceUpdate(goods, totalPriceValue);
       form.reset();
       checkbox.toggleAttribute('checked');
       closeModal();
@@ -250,11 +261,11 @@ const formControl = (closeModal) => {
   });
 };
 
-const {closeModal} = modalControl();
+// const {closeModal} = modalControl(modalOverlay, addGoodBtn);
 
-formControl(closeModal);
+// formControl(closeModal, form, checkbox, table, goods, modalOverlay);
 
-const checkboxDiscountControl = () => {
+const checkboxDiscountControl = (checkbox, discountInput) => {
   checkbox.addEventListener('change', () => {
     checkbox.toggleAttribute('checked');
     if (checkbox.checked) {
@@ -266,4 +277,30 @@ const checkboxDiscountControl = () => {
   });
 };
 
-checkboxDiscountControl();
+// checkboxDiscountControl(checkbox, discountInput);
+
+
+{
+  const init = () => {
+    const {
+      modalOverlay,
+      table,
+      addGoodBtn,
+      totalPriceValue,
+      form,
+      checkbox,
+      discountInput,
+    } = getPageElements();
+    renderGoods(goods, table);
+    totalPriceUpdate(goods, totalPriceValue);
+    deleteControl(table, goods, totalPriceValue);
+    editIdControl(table, goods);
+    totalPriceFormUpdate(form);
+    const {closeModal} = modalControl(modalOverlay, addGoodBtn);
+    formControl(closeModal, form, checkbox,
+        table, goods, modalOverlay, totalPriceValue);
+    checkboxDiscountControl(checkbox, discountInput);
+  };
+
+  window.init = init;
+}
