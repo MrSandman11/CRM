@@ -12,6 +12,7 @@ const {
   totalPriceUpdate,
   deleteControl,
   editIdControl,
+  picControl,
   totalPriceFormUpdate,
   formControl,
   checkboxDiscountControl,
@@ -32,6 +33,7 @@ const {
     totalPriceUpdate(goods, totalPriceValue);
     deleteControl(table, goods, totalPriceValue);
     editIdControl(table, goods);
+    picControl(table);
     totalPriceFormUpdate(form);
     const {closeModal} = modalControl(modalOverlay, addGoodBtn);
     formControl(closeModal, form, checkbox,

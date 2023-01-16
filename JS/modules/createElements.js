@@ -57,6 +57,7 @@ const createRow = (obj, table) => {
 
   const imgTdElem = document.createElement('td');
   imgTdElem.classList.add('table__tbody-td', 'table__tbody-td_img');
+  imgTdElem.dataset.pic = 'https://media.lpgenerator.ru/uploads/2015/10/03/image28.jpg';
   newTrElem.append(imgTdElem);
 
   const editTdElem = document.createElement('td');

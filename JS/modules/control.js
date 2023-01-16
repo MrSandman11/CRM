@@ -79,6 +79,17 @@ const editIdControl = (table, goods) => {
   });
 };
 
+const picControl = (table) => {
+  table.addEventListener('click', e => {
+    const target = e.target;
+    if (target.closest('.table__tbody-td_img')) {
+      const picUrl = target.dataset.pic;
+      const pic = open(picUrl, '', 'width=600, height=600');
+      pic.moveTo(screen.width / 2 - 300, screen.height / 2 - 300);
+    }
+  });
+};
+
 const totalPriceFormUpdate = (form) => {
   const totalPriceForm = document.querySelector('.form__final-price_count');
   const {count, price, discount} = form;
@@ -133,6 +144,7 @@ export default {
   totalPriceUpdate,
   deleteControl,
   editIdControl,
+  picControl,
   totalPriceFormUpdate,
   formControl,
   checkboxDiscountControl,
