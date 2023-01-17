@@ -84,8 +84,14 @@ const picControl = (table) => {
     const target = e.target;
     if (target.closest('.table__tbody-td_img')) {
       const picUrl = target.dataset.pic;
-      const pic = open(picUrl, '', 'width=600, height=600');
-      pic.moveTo(screen.width / 2 - 300, screen.height / 2 - 300);
+      const xPosition = (screen.width - 600) / 2;
+      console.log(window.innerWidth);
+      console.log(xPosition);
+      
+      const yPosition = (screen.height - 647) / 2;
+      console.log(yPosition);
+      const pic = open(picUrl, '',`width=600, height=647, top=${yPosition}, left=${xPosition}`);
+      // pic.moveTo(xPosition, yPosition);
     }
   });
 };
