@@ -1,14 +1,18 @@
-import goods from './data.js';
+// import goods from './data.js';
 import getRandomNum from './serviceFunc.js';
+import getPageElements from './pageElements.js';
 
-const addGoodData = newGood => {
-  goods.push(newGood);
-};
+// const addGoodData = newGood => {
+//   goods.push(newGood);
+// };
 
-const createRow = (obj, table) => {
+const createRow = (obj) => {
+  const {
+    table,
+  } = getPageElements();
   const newTrElem = document.createElement('tr');
   newTrElem.classList.add('table__tbody-tr');
-  table.prepend(newTrElem);
+  table.append(newTrElem);
 
   const idTdElem = document.createElement('td');
   idTdElem.classList.add('table__tbody-td', 'table__tbody-td_id');
@@ -24,6 +28,7 @@ const createRow = (obj, table) => {
   const nameTdElem = document.createElement('td');
   nameTdElem.classList.add('table__tbody-td', 'table__tbody-td_name');
   nameTdElem.textContent = obj.name;
+  nameTdElem.textContent = obj.title;
   newTrElem.append(nameTdElem);
 
   const categoryTdElem = document.createElement('td');
@@ -43,16 +48,20 @@ const createRow = (obj, table) => {
 
   const priceTdElem = document.createElement('td');
   priceTdElem.classList.add('table__tbody-td', 'table__tbody-td_price');
+  let price;
   if (obj.discount) {
-    obj.price -= obj.price * obj.discount / 100;
+    price = Math.round(obj.price - (obj.price * obj.discount / 100));
+    priceTdElem.textContent = price;
+  } else {
+    price = obj.price;
+    priceTdElem.textContent = price;
   }
-  priceTdElem.textContent = obj.price;
   newTrElem.append(priceTdElem);
 
   const totalPriceTdElem = document.createElement('td');
   totalPriceTdElem.classList.add('table__tbody-td'
       , 'table__tbody-td_total-price');
-  totalPriceTdElem.textContent = obj.price * obj.count;
+  totalPriceTdElem.textContent = Math.round(price * obj.count);
   newTrElem.append(totalPriceTdElem);
 
   const imgTdElem = document.createElement('td');
@@ -69,14 +78,22 @@ const createRow = (obj, table) => {
   newTrElem.append(delTdElem);
 };
 
-const renderGoods = (arr, table) => {
-  arr.map((item) => {
-    createRow(item, table);
+const renderGoods = (err, data) => {
+  if (err) {
+    console.warn(err, data);
+    const h2 = document.createElement('h2');
+    h2.style.color = 'red';
+    h2.textContent = err;
+    document.body.prepend(h2);
+    return;
+  }
+  data.map((item) => {
+    createRow(item);
   });
 };
 
 export default {
-  addGoodData,
+  // addGoodData,
   createRow,
   renderGoods,
 };

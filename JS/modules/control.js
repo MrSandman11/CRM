@@ -1,8 +1,13 @@
 import createElements from './createElements.js';
 const {
-  addGoodData,
+  // addGoodData,
   createRow,
 } = createElements;
+
+import loadData from './loadData.js';
+const {
+  fetchRequest,
+} = loadData;
 
 const modalControl = (modalOverlay, addGoodBtn) => {
   const openModal = () =>
@@ -26,58 +31,76 @@ const modalControl = (modalOverlay, addGoodBtn) => {
   };
 };
 
-const totalPriceUpdate = (arr, totalPriceValue) => {
-  let totalPrice = 0;
-  for (const good of arr) {
-    totalPrice +=
-      good.count * good.price - (good.count * good.price * good.discount / 100);
-  }
-  totalPriceValue.textContent = `$ ${totalPrice}`;
-};
+const modalErrorControl = (modalErrorOverlay) => {
+  const openErrorModal = () =>
+    modalErrorOverlay.classList.add('overlay-modal_error_active');
 
-const deleteControl = (table, goods, totalPriceValue) => {
-  table.addEventListener('click', e => {
+  openErrorModal();
+
+  const closeErrorModal = () =>
+    modalErrorOverlay.classList.remove('overlay-modal_error_active');
+
+  modalErrorOverlay.addEventListener('click', e => {
     const target = e.target;
-    if (target.closest('.table__tbody-td_del')) {
-      const deletedTr = target.closest('.table__tbody-tr');
-      for (let i = goods.length; i--;) {
-        if (goods[i].id === Number(deletedTr.firstChild.textContent)) {
-          goods.splice(i, 1);
-        }
-      }
-      target.closest('.table__tbody-tr').remove();
-      totalPriceUpdate(goods, totalPriceValue);
+    if (target === modalErrorOverlay ||
+      target.closest('.modal__close_error')) {
+      closeErrorModal();
     }
   });
 };
 
-const editIdControl = (table, goods) => {
-  table.addEventListener('click', e => {
-    const target = e.target;
-    const editedId = target.parentElement.firstChild;
-    if (target.closest('.table__tbody-td_edit')) {
-      let previousId;
-      for (let i = goods.length; i--;) {
-        if (goods[i].id === Number(editedId.textContent)) {
-          previousId = goods[i].id;
-        }
-      }
-      editedId.setAttribute('contenteditable', true);
-      editedId.style.color = 'red';
-      editedId.focus();
-      editedId.addEventListener('blur', () => {
-        editedId.style.color = '#25213B';
-        editedId.setAttribute('contenteditable', false);
-        for (let i = goods.length; i--;) {
-          if (goods[i].id === previousId) {
-            goods[i].id = Number(editedId.textContent);
-            console.log(goods);
-          }
-        }
-      });
-    }
-  });
-};
+// const totalPriceUpdate = (arr, totalPriceValue) => {
+//   let totalPrice = 0;
+//   for (const good of arr) {
+//     totalPrice +=
+//       good.count * good.price - (good.count * good.price * good.discount / 100);
+//   }
+//   totalPriceValue.textContent = `$ ${totalPrice}`;
+// };
+
+// const deleteControl = (table, goods, totalPriceValue) => {
+//   table.addEventListener('click', e => {
+//     const target = e.target;
+//     if (target.closest('.table__tbody-td_del')) {
+//       const deletedTr = target.closest('.table__tbody-tr');
+//       for (let i = goods.length; i--;) {
+//         if (goods[i].id === Number(deletedTr.firstChild.textContent)) {
+//           goods.splice(i, 1);
+//         }
+//       }
+//       target.closest('.table__tbody-tr').remove();
+//       totalPriceUpdate(goods, totalPriceValue);
+//     }
+//   });
+// };
+
+// const editIdControl = (table, goods) => {
+//   table.addEventListener('click', e => {
+//     const target = e.target;
+//     const editedId = target.parentElement.firstChild;
+//     if (target.closest('.table__tbody-td_edit')) {
+//       let previousId;
+//       for (let i = goods.length; i--;) {
+//         if (goods[i].id === Number(editedId.textContent)) {
+//           previousId = goods[i].id;
+//         }
+//       }
+//       editedId.setAttribute('contenteditable', true);
+//       editedId.style.color = 'red';
+//       editedId.focus();
+//       editedId.addEventListener('blur', () => {
+//         editedId.style.color = '#25213B';
+//         editedId.setAttribute('contenteditable', false);
+//         for (let i = goods.length; i--;) {
+//           if (goods[i].id === previousId) {
+//             goods[i].id = Number(editedId.textContent);
+//             console.log(goods);
+//           }
+//         }
+//       });
+//     }
+//   });
+// };
 
 const picControl = (table) => {
   table.addEventListener('click', e => {
@@ -105,24 +128,62 @@ const totalPriceFormUpdate = (form) => {
   });
 };
 
-const formControl = (closeModal, form, checkbox,
-    table, goods, totalPriceValue) => {
+const formControl = (form, closeModal, checkbox, modalErrorControl
+    , modalErrorOverlay, errorText) => {
   form.addEventListener('submit', e => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const newGood = Object.fromEntries(formData);
-    const {name, category, units, discount, description, count, price} = form;
+    // const formData = new FormData(e.target);
+    // const newGood = Object.fromEntries(formData);
+    const {title, category, units, discount, description, count, price} = form;
 
-    if (!name.value || !category.value || !units.value ||
+    if (!title.value || !category.value || !units.value ||
       !discount.value || !description.value || !count.value || !price.value) {
       alert('Заполните все поля');
     } else {
-      createRow(newGood, table);
-      addGoodData(newGood);
-      totalPriceUpdate(goods, totalPriceValue);
-      form.reset();
-      checkbox.toggleAttribute('checked');
-      closeModal();
+      const URL = 'https://violet-western-swordfish.glitch.me/api/goods';
+      fetchRequest(URL, {
+        method: 'POST',
+        body: {
+          title: form.title.value,
+          body: form.description.value,
+          price: form.price.value,
+          category: form.category.value,
+          count: form.count.value,
+          discount: form.discount.value,
+          units: form.units.value,
+          description: form.description.value,
+        },
+        callback(err, data, response) {
+          if (err) {
+            console.warn(err, data);
+            console.log(err.message);
+            if (err.message !== '') {
+              errorText.textContent = err;
+            } else {
+              errorText.textContent = 'Что-то пошло не так';
+            }
+            modalErrorControl(modalErrorOverlay);
+          } else {
+            if (response.status === 200 || response.status === 201) {
+              console.log(response.status);
+              form.reset();
+              checkbox.toggleAttribute('checked');
+              closeModal();
+              createRow(data);
+            }
+          }
+          // form.textContent = `Заявка успешно отправлена, номер заявки ${data.id}`;
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      // createRow(newGood);
+      // addGoodData(newGood);
+      // totalPriceUpdate(goods, totalPriceValue);
+      // form.reset();
+      // checkbox.toggleAttribute('checked');
+      // closeModal();
     }
   });
 };
@@ -141,9 +202,10 @@ const checkboxDiscountControl = (checkbox, discountInput) => {
 
 export default {
   modalControl,
-  totalPriceUpdate,
-  deleteControl,
-  editIdControl,
+  modalErrorControl,
+  // totalPriceUpdate,
+  // deleteControl,
+  // editIdControl,
   picControl,
   totalPriceFormUpdate,
   formControl,

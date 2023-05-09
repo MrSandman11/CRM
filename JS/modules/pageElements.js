@@ -1,5 +1,7 @@
 const getPageElements = () => {
   const modalOverlay = document.querySelector('.overlay-modal');
+  const modalErrorOverlay = document.querySelector('.overlay-modal_error');
+  const errorText = document.querySelector('.modal__text_error');
   const table = document.querySelector('.table__tbody');
   const addGoodBtn = document.querySelector('.table__add-btn');
   const totalPriceValue =
@@ -10,6 +12,8 @@ const getPageElements = () => {
 
   return {
     modalOverlay,
+    modalErrorOverlay,
+    errorText,
     table,
     addGoodBtn,
     totalPriceValue,
