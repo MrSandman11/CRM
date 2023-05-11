@@ -17,7 +17,7 @@
 }
 
 .modal__container {
-  max-width: 792px;
+  /* max-width: 792px; */
   min-height: 613px;
   margin: 0 auto;
   background-color: #F2F0F9;
@@ -265,6 +265,7 @@
 }
 
 .overlay-modal_error {
+  z-index: 1;
   display: none;
   justify-content: center;
   position: fixed;

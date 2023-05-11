@@ -1,5 +1,5 @@
-// import goods from './modules/data.js';
 import getPageElements from './modules/pageElements.js';
+import showModal from './modules/modal.js';
 
 import createElements from './modules/createElements.js';
 const {
@@ -9,49 +9,33 @@ const {
 import control from './modules/control.js';
 const {
   modalControl,
-  modalErrorControl,
-  // totalPriceUpdate,
-  // deleteControl,
-  // editIdControl,
   picControl,
-  totalPriceFormUpdate,
-  formControl,
-  checkboxDiscountControl,
 } = control;
 
-import loadData from './modules/loadData.js';
-const {
-  fetchRequest,
-} = loadData;
+import fetchRequest from './modules/loadData.js';
 
 {
   const init = () => {
     const {
-      modalOverlay,
-      modalErrorOverlay,
-      errorText,
       table,
       addGoodBtn,
-      // totalPriceValue,
-      form,
-      checkbox,
-      discountInput,
     } = getPageElements();
     const URL = 'https://violet-western-swordfish.glitch.me/api/goods';
     fetchRequest(URL, {
       method: 'get',
       callback: renderGoods,
     });
-    // renderGoods(goods, table);
-    // totalPriceUpdate(goods, totalPriceValue);
-    // deleteControl(table, goods, totalPriceValue);
-    // editIdControl(table, goods);
+    modalControl(addGoodBtn);
+    table.addEventListener('click', async ({target}) => {
+      if (target.classList.contains('table__tbody-td_edit')) {
+        const id = target.parentElement.firstChild.textContent;
+        const URL = 'https://violet-western-swordfish.glitch.me/api/goods';
+        fetchRequest(`${URL}/${id}`, {
+          callback: showModal,
+        });
+      }
+    });
     picControl(table);
-    totalPriceFormUpdate(form);
-    const {closeModal} = modalControl(modalOverlay, addGoodBtn);
-    formControl(form, closeModal, checkbox, modalErrorControl, modalErrorOverlay
-        , errorText);
-    checkboxDiscountControl(checkbox, discountInput);
   };
 
   window.init = init;

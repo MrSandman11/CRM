@@ -1,10 +1,5 @@
-// import goods from './data.js';
 import getRandomNum from './serviceFunc.js';
 import getPageElements from './pageElements.js';
-
-// const addGoodData = newGood => {
-//   goods.push(newGood);
-// };
 
 const createRow = (obj) => {
   const {
@@ -93,7 +88,6 @@ const renderGoods = (err, data) => {
 };
 
 export default {
-  // addGoodData,
   createRow,
   renderGoods,
 };

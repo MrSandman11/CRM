@@ -28,6 +28,4 @@ const fetchRequest = async (url, {
   }
 };
 
-export default {
-  fetchRequest,
-};
+export default fetchRequest;
