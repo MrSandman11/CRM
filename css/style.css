@@ -1,6 +1,7 @@
 @import "normalize.css";
 @import "table.css";
 @import "fonts.css";
+@import "modalError.css";
 
 html {
   position: relative;

@@ -208,7 +208,7 @@ const showModal = async (err, data) => {
         !count.value || !price.value) {
         alert('Заполните все поля');
       } else {
-        const URL = 'https://violet-western-swordfish.glitch.me/api/goods';
+        const URL = 'https://violet-western-swordfish.glitch.me/api1/goods';
         fetchRequest(URL, {
           method: 'POST',
           body: {
