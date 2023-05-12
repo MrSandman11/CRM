@@ -47,88 +47,97 @@ const showModal = async (err, data) => {
 
     <div class="form__line"></div>
 
-    <div class="form__inner-box">
-      <div class="form__name">
-        <label class="form__label" for="title">Наименование</label>
-        <input 
-            class="form__input" 
-            id="title"
-            type="text" 
-            name="title">  
-      </div>
-
-      <div class="form__category">
-        <label class="form__label" for="category">Категория</label>
-        <input 
-            class="form__input" 
-            id="category"
-            type="text" 
-            name="category">
-      </div>
-
-      <div class="form__units">
-        <label class="form__label" for="units">Единицы измерения</label>
-        <input 
-            class="form__input" 
-            id="units"
-            type="text"
-            name="units">
-      </div>
-
-      <fieldset class="form__discount-wrapper">
-        <legend class="form__label">Дисконт</legend>
-
-        <div class="form__discount-input-wrapper">
-          <label class="form__checkbox">
-            <input 
-              class="form__checkbox-input" 
-              type="checkbox"
-              name="discountCheckbox"
-              value="yes">
-          </label>
-
-            <input 
-              class="form__input form__input-discount" 
-              type="number"
-              name="discount"
-              disabled>
-        </div>
-      </fieldset>
-
-      <div class="form__descr">
-        <label class="form__label" for="descr">Описание</label>
-        <textarea 
-            class="form__textarea" 
-            id="descr"
-            name="description"
-            type="text">
-        </textarea>
-      </div>
-
-      <div class="form__count">
-        <label class="form__label" for="count">Количество</label>
-        <input 
-            class="form__input" 
-            id="count"
-            type="number"
-            name="count">
-      </div>
-
-      <div class="form__price">
-        <div class="form__label_price">
-          <label class="form__label" for="price">Цена</label>
+    <div class="form__inner-box-wrapper">
+      <div class="form__inner-box">
+        <div class="form__name">
+          <label class="form__label" for="title">Наименование</label>
           <input 
               class="form__input" 
-              id="price"
-              type="number"
-              name="price">
+              id="title"
+              type="text" 
+              name="title">  
         </div>
-        <button type="button" class="form__image-btn" onclick="file.click()">Добавить изображение</button>
-        <input 
-          id="file"
-          class="form__image-input" 
-          type="file"
-          name="img">
+
+        <div class="form__category">
+          <label class="form__label" for="category">Категория</label>
+          <input 
+              class="form__input" 
+              id="category"
+              type="text" 
+              name="category">
+        </div>
+
+        <div class="form__units">
+          <label class="form__label" for="units">Единицы измерения</label>
+          <input 
+              class="form__input" 
+              id="units"
+              type="text"
+              name="units">
+        </div>
+
+        <fieldset class="form__discount-wrapper">
+          <legend class="form__label">Дисконт</legend>
+
+          <div class="form__discount-input-wrapper">
+            <label class="form__checkbox">
+              <input 
+                class="form__checkbox-input" 
+                type="checkbox"
+                name="discountCheckbox"
+                value="yes">
+            </label>
+
+              <input 
+                class="form__input form__input-discount" 
+                type="number"
+                name="discount"
+                disabled>
+          </div>
+
+          <p class="form__preview-error">Изображение не должно 
+          превышать размер 1 Мб</p>
+        </fieldset>
+
+        <div class="form__descr">
+          <label class="form__label" for="descr">Описание</label>
+          <textarea 
+              class="form__textarea" 
+              id="descr"
+              name="description"
+              type="text">
+          </textarea>
+        </div>
+
+        <div class="form__count">
+          <label class="form__label" for="count">Количество</label>
+          <input 
+              class="form__input" 
+              id="count"
+              type="number"
+              name="count">
+        </div>
+
+        <div class="form__price">
+          <div class="form__label_price">
+            <label class="form__label" for="price">Цена</label>
+            <input 
+                class="form__input" 
+                id="price"
+                type="number"
+                name="price">
+          </div>
+          <button type="button" class="form__image-btn" onclick="file.click()">Добавить изображение</button>
+          <input 
+            id="file"
+            class="form__image-input" 
+            type="file"
+            name="img">
+        </div>
+      </div>
+
+      <div class="form__preview-wrapper">
+        <img class="form__preview"> 
       </div>
     </div>
   </fieldset>
@@ -151,6 +160,10 @@ const showModal = async (err, data) => {
   const {title, category, units, count, description, price,
     discount, discountCheckbox} = form;
   const totalPriceForm = document.querySelector('.form__final-price_count');
+  const file = document.querySelector('.form__image-input');
+  const previewWrapper = document.querySelector('.form__preview-wrapper');
+  const preview = document.querySelector('.form__preview');
+  const previewError = document.querySelector('.form__preview-error');
 
   if (data) {
     title.value = data.title;
@@ -168,6 +181,20 @@ const showModal = async (err, data) => {
       `$ ${count.value * price.value -
       (count.value * price.value * discount.value / 100)}`;
   }
+
+  file.addEventListener('change', () => {
+    if (file.files.length > 0) {
+      if (file.files[0].size > 1000000) {
+        previewError.style.display = 'block';
+      } else {
+        const src = URL.createObjectURL(file.files[0]);
+        console.log(file.files[0]);
+        previewWrapper.style.display = 'block';
+        preview.src = src;
+        previewError.style.display = 'none';
+      }
+    }
+  });
 
   return new Promise(resolve => {
     discountCheckbox.addEventListener('change', () => {
@@ -196,7 +223,7 @@ const showModal = async (err, data) => {
       if (target === overlay ||
         target.closest('.modal__close')) {
         overlay.remove();
-        resolve(console.log('Модальное окно закрыто'));
+        resolve();
       }
     });
 
@@ -208,7 +235,7 @@ const showModal = async (err, data) => {
         !count.value || !price.value) {
         alert('Заполните все поля');
       } else {
-        const URL = 'https://violet-western-swordfish.glitch.me/api1/goods';
+        const URL = 'https://violet-western-swordfish.glitch.me/api/goods';
         fetchRequest(URL, {
           method: 'POST',
           body: {

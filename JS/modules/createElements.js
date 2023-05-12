@@ -1,4 +1,8 @@
-import getRandomNum from './serviceFunc.js';
+import serviceFunc from './serviceFunc.js';
+const {
+  getRandomNum,
+} = serviceFunc;
+
 import getPageElements from './pageElements.js';
 
 const createRow = (obj) => {
